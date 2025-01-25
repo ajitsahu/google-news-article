@@ -140,18 +140,29 @@ def main():
                     for idx, item in enumerate(results):
                         with cols[idx % 2]:
                             with st.container():
+                                # Display title
                                 st.markdown(f"### {item['title']}")
                                 
-                                # Only show valid images
-                                if (show_images and 
-                                    item.get('img') and 
-                                    item['img'].startswith('http') and 
-                                    not item['img'].endswith(('0', '.txt', '.html'))):
+                                # Skip image display if:
+                                # 1. Image URL is missing or invalid
+                                # 2. Image is a placeholder (ends with 0 or contains placeholder indicators)
+                                # 3. Image URL doesn't point to an actual image file
+                                valid_image = (
+                                    show_images 
+                                    and item.get('img') 
+                                    and isinstance(item['img'], str)
+                                    and item['img'].startswith('http')
+                                    and not any(x in item['img'].lower() for x in ['0', 'placeholder', 'default', '.txt', '.html'])
+                                    and any(ext in item['img'].lower() for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp'])
+                                )
+                                
+                                if valid_image:
                                     try:
                                         st.image(item['img'], use_container_width=True)
                                     except:
-                                        pass  # Silently skip invalid images
+                                        pass
                                 
+                                # Display article metadata
                                 st.markdown(f"**Source:** {item['media']}")
                                 st.markdown(f"**Date:** {item.get('date', 'N/A')}")
                                 if item.get('desc'):
