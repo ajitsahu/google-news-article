@@ -2,7 +2,7 @@
 
 A modern, interactive web application built with Streamlit that allows users to search and filter news articles from Google News.
 
-![Google News Explorer](https://raw.githubusercontent.com/streamlit/docs/main/public/images/brand/streamlit-mark-color.png)
+![Google News Explorer](https://user-images.githubusercontent.com/7164864/217935870-c0bc60a3-6fc0-4047-b011-7b4c59488c91.png)
 
 ## Features
 
